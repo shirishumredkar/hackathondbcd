@@ -19,11 +19,9 @@ provider "google" {
 
 # --- D & G. CLOUD RUN SERVICE ---
 resource "google_cloud_run_v2_service" "app_service" {
-  name     = "cloudrun-app-server"
-  location = var.region
-  ingress  = "INGRESS_TRAFFIC_ALL"
-  
-  # FIXED: Updated argument name for the Google Provider v6.0+ engine
+  name                = "cloudrun-app-server"
+  location            = var.region
+  ingress             = "INGRESS_TRAFFIC_ALL"
   deletion_protection = false 
 
   template {
@@ -37,7 +35,7 @@ resource "google_cloud_run_v2_service" "app_service" {
         container_port = 8080
       }
 
-       # Mount the secret volume as a physical file inside the container
+      # Mount the secret volume as a physical file inside the container
       volume_mounts {
         name       = "env-volume"
         mount_path = "/app/secrets"
@@ -56,21 +54,18 @@ resource "google_cloud_run_v2_service" "app_service" {
       }
     }
 
-    }
-
+    # FIXED: Nested properly inside the template block
     vpc_access {
       connector = var.vpc_connector_id
       egress    = "ALL_TRAFFIC"
     }
-  }
-}
+  } # Closes template block
+} # Closes google_cloud_run_v2_service block
 
 # Public Access binding
 resource "google_cloud_run_v2_service_iam_member" "public_access" {
   name     = google_cloud_run_v2_service.app_service.name
   location = google_cloud_run_v2_service.app_service.location
   member   = "allUsers"
-  
-  # FIXED: Changed from run.viewer to run.invoker to allow HTTP requests to hit the container
   role     = "roles/run.invoker" 
 }
