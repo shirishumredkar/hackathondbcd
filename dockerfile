@@ -15,4 +15,5 @@ COPY app.py .
 EXPOSE 8080
 
 # Step 6: Run the application using the python runtime engine
-CMD ["python", "app.py"]
+# CMD ["python", "app.py"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "myproject.wsgi:application"]
