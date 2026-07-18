@@ -43,7 +43,8 @@ class ChatAppConfig(AppConfig):
             base_url=settings.ENDPOINT,
             api_key=settings.GITHUB_TOKEN,
             model=settings.EMBEDDING_MODEL_NAME,
-            tiktoken_enabled=False
+            #tiktoken_enabled=False
+            check_embedding_ctx_length=False 
         )
 
         # 5. Build and populate Chroma Vector Store
