@@ -26,6 +26,9 @@ resource "google_cloud_run_v2_service" "app_service" {
   template {
     service_account = var.cloudrun_sa_email
     
+    # FIXED: Customer-Managed Encryption Keys (CMEK) belong inside the template block 
+    encryption_key = var.kms_key_id
+    
     containers {
       # Points directly to the image built & pushed during the GitHub Action step
       image = "${var.registry_url}/my-app:${var.image_tag}"
@@ -35,16 +38,14 @@ resource "google_cloud_run_v2_service" "app_service" {
       }
     }
 
-    # C. Rout traffic natively through your VPC Architecture
+    # C. Route traffic natively through your VPC Architecture
     vpc_access {
       connector = var.vpc_connector_id
       egress    = "ALL_TRAFFIC"
     }
   }
-
-  # B. Secure your deployed container using your customer-managed KMS key
-  kms_key = var.kms_key_id
 }
+
 
 # Public Access binding (Optional: remove if you want it strictly private inside the VPC)
 resource "google_cloud_run_v2_service_iam_member" "public_access" {
