@@ -9,3 +9,4 @@ langchain-text-splitters
 langchain-chroma
 python-dotenv
 gunicorn
+transformers>=4.30.0
