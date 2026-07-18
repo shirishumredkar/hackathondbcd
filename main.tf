@@ -24,7 +24,7 @@ resource "google_cloud_run_v2_service" "app_service" {
   ingress  = "INGRESS_TRAFFIC_ALL"
   
   # FIXED: Updated argument name for the Google Provider v6.0+ engine
-  deletion_protection_enabled = false 
+  deletion_protection = false 
 
   template {
     service_account = var.cloudrun_sa_email
