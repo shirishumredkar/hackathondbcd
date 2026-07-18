@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    /* Absolute overlay container to control full page real-estate */
+    .db-split-portal-container {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        z-index: 1000;
+        background-color: #ffffff;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Left Side Area: Clean, structured institutional sign-in module */
+    .db-auth-panel {
+        width: 42%;
+        background-color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px;
+        border-right: 1px solid var(--db-gray-border);
+    }
+
+    /* Right Side Area: Deep corporate brand presence anchor background */
+    .db-brand-panel {
+        width: 58%;
+        background-color: var(--db-blue-primary);
+        background-image: linear-gradient(135deg, #0018A8 0%, #000f66 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 80px 100px;
+        color: #ffffff;
+        position: relative;
+    }
+
+    /* Responsive grid collapsing for secondary device breakpoints */
+    @media (max-width: 1024px) {
+        .db-auth-panel { width: 100%; padding: 40px 24px; border-right: none; }
+        .db-brand-panel { display: none; }
+    }
+
+    /* Form Container Boundaries */
+    .db-form-scaffold {
+        width: 100%;
+        max-w: 360px;
+    }
+
+    /* Context Header Groupings */
+    .db-portal-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--db-text-dark);
+        letter-spacing: -0.5px;
+        margin-bottom: 6px;
+    }
+
+    .db-portal-subtitle {
+        font-size: 13px;
+        color: var(--db-text-muted);
+        line-height: 1.5;
+        margin-bottom: 36px;
+    }
+
+    /* Input Structure Layout Wrappers */
+    .db-input-row {
+        margin-bottom: 22px;
+    }
+
+    .db-input-row label {
+        display: block;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--db-text-dark);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 8px;
+    }
+
+    /* High Definition Structural Inputs matching DB main parameters */
+    .db-input-element {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #cbd5e1;
+        border-radius: 2px; /* Strict institutional sharp-corner look */
+        font-size: 14px;
+        color: var(--db-text-dark);
+        outline: none;
+        background-color: #ffffff;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .db-input-element:focus {
+        border-color: var(--db-blue-primary);
+        box-shadow: 0 0 0 3px rgba(0, 24, 168, 0.06);
+    }
+
+    /* Action Auxiliary Links */
+    .db-action-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 13px;
+        margin-bottom: 32px;
+    }
+
+    .db-checkbox-align {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--db-text-muted);
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .db-checkbox-align input {
+        accent-color: var(--db-blue-primary);
+        width: 15px;
+        height: 15px;
+    }
+
+    .db-assistance-link {
+        color: var(--db-blue-primary);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .db-assistance-link:hover {
+        text-decoration: underline;
+    }
+
+    /* Brand Panel Geometric Overlay Typography elements */
+    .db-hero-heading {
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.5px;
+        margin-bottom: 20px;
+        max-w: 480px;
+    }
+
+    .db-hero-body {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 15px;
+        line-height: 1.6;
+        max-w: 460px;
+        font-weight: 400;
+    }
+
+    /* Fineprint alignment decoration lines */
+    .db-fineprint-divider {
+        margin-top: 40px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        display: flex;
+        gap: 24px;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+</style>
+
+<div class="db-split-portal-container">
+
+    <!-- Left Hand Workspace: Security Terminal Form Gateway -->
+    <div class="db-auth-panel">
+        <div class="db-form-scaffold">
+
+
+            <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 32px;">
+                <!-- Mathematically aligned crisp corporate logo blueprint -->
+                <!--<div class="db-logo-box" style="width: 40px; height: 40px; border-width: 3.5px;">
+                    <div class="db-logo-slash" style="width: 40px; height:4px; top: 14px; left: -2px;"></div>
+                </div>-->
+                <svg viewBox="0 0 100 100" style="width: 40px; height: 40px;" aria-label="Deutsche Bank Logo">
+                    <!-- Square Border -->
+                    <rect x="5" y="5" width="90" height="90" fill="none" stroke="#0018A8" stroke-width="9"/>
+                    <!-- Internal Diagonal Slash -->
+                    <line x1="22" y1="78" x2="78" y2="22" stroke="#0018A8" stroke-width="9" stroke-linecap="square"/>
+                </svg>
+
+                <div style="display: flex; flex-direction: column; line-height: 1.1;">
+                    <span style="font-size: 15px; font-weight: 700; color: var(--db-text-dark);">Deutsche Bank</span>
+                    <!--<span style="font-size: 10px; color: var(&#45;&#45;db-blue-primary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 1px;">Hotscan AI Gateway</span>-->
+                </div>
+            </div>
+
+            <!--<h2 class="db-portal-title">System Verification</h2>
+            <p class="db-portal-subtitle">Access authorized anti-money laundering operation desks and transaction screening systems.</p>-->
+
+            <!-- Standard Authentication Submission Block -->
+            <form method="post">
+                {% csrf_token %}
+                <div class="db-input-row">
+                    <label for="id_username">User ID</label>
+                    <input type="text" id="id_username" name="username" class="db-input-element" required autocomplete="username" placeholder="User Id">
+                </div>
+                <div class="db-input-row">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <label for="id_password" style="margin-bottom: 0;">Password</label>
+                    </div>
+                    <input type="password" id="id_password" name="password" class="db-input-element" required autocomplete="current-password" placeholder="Password">
+                </div>
+
+                <div class="db-action-row">
+                    <label class="db-checkbox-align" for="persist_token">
+                        <input type="checkbox" id="persist_token">
+                        <span>Remember credentials</span>
+                    </label>
+<!--                    <a href="#" class="db-assistance-link">Terminal Support</a>-->
+                </div>
+
+                <button type="submit" class="corporate-btn" style="width: 100%; padding: 14px; font-size: 14px; border-radius: 2px;">
+                    Authenticate
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Right Hand Workspace: Global Editorial Decorative Canvas -->
+    <div class="db-brand-panel">
+        <h3 class="db-hero-heading">Predictive AI Chatbot</h3>
+         <div class="db-fineprint-divider">
+           <!-- <span>🔒 Encrypted Node</span>
+            <span>⚡ Real-time Audit</span>
+            <span>🤖 AML v4 Native</span>-->
+        </div>
+        <p class="db-hero-body">
+            An advanced, assistive intelligence portal designed to provide instantaneous compliance resolution and procedural clarity. Utilizing context-aware language models to seamlessly answer cross-border documentation queries, routing logic validations, and structural operational requirements in real time.
+        </p>
+        <div class="db-fineprint-divider">
+           <!-- <span>🔒 Encrypted Node</span>
+            <span>⚡ Real-time Audit</span>
+            <span>🤖 AML v4 Native</span>-->
+        </div>
+    </div>
+
+</div>
+{% endblock %}

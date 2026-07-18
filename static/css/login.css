@@ -1,0 +1,220 @@
+/* Absolute overlay container to control full page real-estate */
+.db-split-portal-container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    z-index: 1000;
+    background-color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Left Side Area: Clean, structured institutional sign-in module */
+.db-auth-panel {
+    width: 42%;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+    border-right: 1px solid var(--db-gray-border);
+}
+
+/* Right Side Area: Deep corporate brand presence anchor background */
+.db-brand-panel {
+    width: 58%;
+    background-color: var(--db-blue-primary);
+    background-image: linear-gradient(135deg, #0018A8 0%, #000f66 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 100px;
+    color: #ffffff;
+    position: relative;
+}
+
+/* Responsive grid collapsing for secondary device breakpoints */
+@media (max-width: 1024px) {
+    .db-auth-panel { width: 100%; padding: 40px 24px; border-right: none; }
+    .db-brand-panel { display: none; }
+}
+
+/* Form Container Boundaries */
+.db-form-scaffold {
+    width: 100%;
+    max-width: 360px;
+}
+
+/* Context Header Groupings */
+.db-portal-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--db-text-dark);
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+}
+
+.db-portal-subtitle {
+    font-size: 13px;
+    color: var(--db-text-muted);
+    line-height: 1.5;
+    margin-bottom: 36px;
+}
+
+/* Input Structure Layout Wrappers */
+.db-input-row {
+    margin-bottom: 22px;
+}
+
+.db-input-row label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--db-text-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+}
+
+/* High Definition Structural Inputs matching DB main parameters */
+.db-input-element {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 2px; /* Strict institutional sharp-corner look */
+    font-size: 14px;
+    color: var(--db-text-dark);
+    outline: none;
+    background-color: #ffffff;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.db-input-element:focus {
+    border-color: var(--db-blue-primary);
+    box-shadow: 0 0 0 3px rgba(0, 24, 168, 0.06);
+}
+
+/* Action Auxiliary Links */
+.db-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 32px;
+}
+
+.db-checkbox-align {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--db-text-muted);
+    cursor: pointer;
+    user-select: none;
+}
+
+.db-checkbox-align input {
+    accent-color: var(--db-blue-primary);
+    width: 15px;
+    height: 15px;
+}
+
+.db-assistance-link {
+    color: var(--db-blue-primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.db-assistance-link:hover {
+    text-decoration: underline;
+}
+
+/* Brand Panel Geometric Overlay Typography elements */
+.db-hero-heading {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+    max-width: 480px;
+}
+
+.db-hero-body {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 460px;
+    font-weight: 400;
+}
+
+/* New styles for elements that had inline styles */
+.corporate-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 14px;
+    border-radius: 2px;
+}
+
+.db-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+}
+
+.db-logo-svg {
+    width: 40px;
+    height: 40px;
+}
+
+.db-logo-text-container {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.db-logo-text-primary {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--db-text-dark);
+}
+
+.db-logo-text-secondary {
+    font-size: 10px;
+    color: var(--db-blue-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 1px;
+}
+
+.db-password-label-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.db-password-label {
+    margin-bottom: 0;
+}
+
+.db-hero-heading-container {
+    max-width: 480px;
+}
+
+.db-hero-body-container {
+    max-width: 460px;
+}
+
+/* Fineprint alignment decoration lines */
+.db-fineprint-divider {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    gap: 24px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}

@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .workspace-outer-frame {
+        max-width: 1100px;
+        margin: 0 auto;
+        height: calc(100vh - 152px);
+        background-color: var(--db-gray-panel);
+        border: 1px solid var(--db-gray-border);
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .workspace-title-bar {
+        padding: 20px 32px;
+        border-bottom: 1px solid var(--db-gray-border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #ffffff;
+    }
+    .hd-signal-badge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        padding: 6px 14px;
+        border-radius: 100px;
+        color: #166534;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .hd-signal-emitter {
+        width: 6px;
+        height: 6px;
+        background-color: #15803d;
+        border-radius: 50%;
+        position: relative;
+    }
+    .hd-signal-emitter::after {
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #22c55e;
+        border-radius: 50%;
+        top: -6px;
+        left: -6px;
+        animation: hdRadar 1.8s infinite cubic-bezier(0.1, 0, 0, 1);
+        opacity: 0;
+    }
+    @keyframes hdRadar {
+        0% { transform: scale(0.3); opacity: 0.8; }
+        80% { opacity: 0; }
+        100% { transform: scale(1.3); opacity: 0; }
+    }
+    .transaction-feed-scroller {
+        flex: 1;
+        overflow-y: auto;
+        padding: 32px 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        background-color: #f8fafc; /* Crisp light container backdrop */
+    }
+    .feed-row { display: flex; width: 100%; }
+    .row-operator { justify-content: flex-end; }
+    .row-system { justify-content: flex-start; }
+    .dialogue-card {
+        max-width: 68%;
+        padding: 14px 20px;
+        font-size: 14px;
+        line-height: 1.6;
+        border-radius: 4px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    }
+    .row-operator .dialogue-card {
+        background-color: var(--db-blue-primary);
+        color: #ffffff;
+        font-weight: 400;
+    }
+    .row-system .dialogue-card {
+        background-color: #ffffff;
+        color: var(--db-text-dark);
+        border: 1px solid var(--db-gray-border);
+    }
+    .operational-input-tray {
+        padding: 24px 40px;
+        border-top: 1px solid var(--db-gray-border);
+        background-color: #ffffff;
+    }
+    .input-flex-container {
+        display: flex;
+        gap: 16px;
+    }
+    .terminal-input-field {
+        flex: 1;
+        border: 1px solid var(--db-gray-border);
+        border-radius: 2px;
+        padding: 14px 18px;
+        font-size: 14px;
+        color: var(--db-text-dark);
+        outline: none;
+        background-color: #ffffff;
+        transition: border-color 0.1s ease;
+    }
+    .terminal-input-field:focus {
+        border-color: var(--db-blue-primary);
+    }
+</style>
+
+<div class="workspace-outer-frame">
+    <div class="workspace-title-bar">
+        <div>
+            <!--<h3 style="font-size: 15px; font-weight: 700; color: var(&#45;&#45;db-text-dark);">Chat Assistant  </h3>-->
+            <p style="font-size: 12px; color: var(--db-text-muted); margin-top: 3px;">Session ID: <span style="font-family: monospace; font-weight: 700; color: var(--db-text-dark);">3g7k9x2w1v8z5m4q6p0r7s9t3n2b5v4c</span></p>
+        </div>
+        <div class="hd-signal-badge">
+            <div class="hd-signal-emitter"></div>
+            <span>Active</span>
+        </div>
+    </div>
+    <div class="transaction-feed-scroller" id="chat-wrapper">
+        {% for message in chat_history %}
+            <div class="feed-row {% if message.role == 'user' %}row-operator{% else %}row-system{% endif %}">
+                <div class="dialogue-card">{{ message.text }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="operational-input-tray">
+        <div class="input-flex-container">
+            {% csrf_token %}
+            <input type="text" id="user-input" placeholder="Ask Questions..." class="terminal-input-field" autocomplete="off">
+            <button id="send-btn" class="corporate-btn" style="padding: 0 36px; border-radius: 2px; font-size: 14px;">Submit</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const wrapper = document.getElementById('chat-wrapper');
+    const input = document.getElementById('user-input');
+    const btn = document.getElementById('send-btn');
+    wrapper.scrollTop = wrapper.scrollHeight;
+
+    async function send() {
+        const msg = input.value.trim();
+        if(!msg) return;
+        input.value = '';
+
+        wrapper.insertAdjacentHTML('beforeend', `<div class="feed-row row-operator"><div class="dialogue-card">${escapeHtml(msg)}</div></div>`);
+        wrapper.scrollTop = wrapper.scrollHeight;
+
+        const res = await fetch("{% url 'chatbot_api' %}", {
+            method: "POST",
+            headers: {"Content-Type": "application/json", "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value},
+            body: JSON.stringify({message: msg})
+        });
+        const data = await res.json();
+
+        wrapper.insertAdjacentHTML('beforeend', `<div class="feed-row row-system"><div class="dialogue-card">${escapeHtml(data.reply)}</div></div>`);
+        wrapper.scrollTop = wrapper.scrollHeight;
+    }
+    btn.addEventListener('click', send);
+    input.addEventListener('keydown', (e) => { if(e.key === 'Enter') send(); });
+    function escapeHtml(str) { return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+</script>
+{% endblock %}
