@@ -57,7 +57,8 @@ resource "google_cloud_run_v2_service" "app_service" {
     # FIXED: Nested properly inside the template block
     vpc_access {
       connector = var.vpc_connector_id
-      egress    = "ALL_TRAFFIC"
+      #egress    = "ALL_TRAFFIC"
+      egress     = "PRIVATE_RANGES_ONLY" 
     }
   } # Closes template block
 } # Closes google_cloud_run_v2_service block
