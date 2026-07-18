@@ -22,15 +22,15 @@ resource "google_cloud_run_v2_service" "app_service" {
   name     = "cloudrun-app-server"
   location = var.region
   ingress  = "INGRESS_TRAFFIC_ALL"
-  deletion_protection = false
+  
+  # FIXED: Updated argument name for the Google Provider v6.0+ engine
+  deletion_protection_enabled = false 
+
   template {
     service_account = var.cloudrun_sa_email
-    
-    # FIXED: Customer-Managed Encryption Keys (CMEK) belong inside the template block 
-    encryption_key = var.kms_key_id
+    encryption_key  = var.kms_key_id
     
     containers {
-      # Points directly to the image built & pushed during the GitHub Action step
       image = "${var.registry_url}/my-app:${var.image_tag}"
       
       ports {
@@ -38,7 +38,6 @@ resource "google_cloud_run_v2_service" "app_service" {
       }
     }
 
-    # C. Route traffic natively through your VPC Architecture
     vpc_access {
       connector = var.vpc_connector_id
       egress    = "ALL_TRAFFIC"
@@ -46,11 +45,12 @@ resource "google_cloud_run_v2_service" "app_service" {
   }
 }
 
-
-# Public Access binding (Optional: remove if you want it strictly private inside the VPC)
+# Public Access binding
 resource "google_cloud_run_v2_service_iam_member" "public_access" {
   name     = google_cloud_run_v2_service.app_service.name
   location = google_cloud_run_v2_service.app_service.location
-  role     = "roles/run.viewer"
   member   = "allUsers"
+  
+  # FIXED: Changed from run.viewer to run.invoker to allow HTTP requests to hit the container
+  role     = "roles/run.invoker" 
 }
