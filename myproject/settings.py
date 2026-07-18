@@ -17,7 +17,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ('true', '1', 't')
 
 # Explicitly trust the Cloud Run origin for secure POST requests (Include https://)
 CSRF_TRUSTED_ORIGINS = [
-    'https://run.app',
+    'https://cloudrun-app-server-272907652960.us-central1.run.app'
 ]
 
 # ALLOWED_HOSTS must include '*' or your Cloud Run domain for the app to be reachable online
