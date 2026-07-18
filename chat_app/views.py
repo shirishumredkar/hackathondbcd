@@ -36,6 +36,12 @@ def retrieve_node(state: GraphState) -> dict:
     question = state["question"]
     results = vectorstore.similarity_search_with_score(question, k=1)
 
+    # If the database returns context, extract it
+    if results and len(results) > 0:
+       context = results[0][0].page_content
+    else:
+       context = "No database records found matching this context."
+
     if not results:
         print(f"[Hotscan Debug] -> Zero database records found for query: '{question}'")
         return {"retrieved_context": "", "score": 999.0}
