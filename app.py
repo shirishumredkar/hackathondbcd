@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return "Hello, World! Your Cloud Run pipeline is working perfectly! 🚀\n"
+    return "Hello, World !!! Your Cloud Run pipeline is working perfectly! 🚀\n"
 
 if __name__ == "__main__":
     # Cloud Run injects the PORT environment variable automatically
