@@ -12,6 +12,7 @@ else:
     load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # --- SECURE CONFIGURATIONS FROM ENVIRONMENT ---
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-dev-token-professional-ui')
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ('true', '1', 't')
 
