@@ -1,7 +1,7 @@
 terraform {
   required_version = ">= 1.0.0"
   backend "gcs" {
-    bucket = "YOUR_APP_STATE_BUCKET"
+    bucket = "hackathondb2026-cloudrun-app-tfstate-bucket"
     prefix = "app/state"
   }
   required_providers {
