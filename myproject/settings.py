@@ -15,8 +15,15 @@ else:
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-dev-token-professional-ui')
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ('true', '1', 't')
 
+# Explicitly trust the Cloud Run origin for secure POST requests (Include https://)
+CSRF_TRUSTED_ORIGINS = [
+    'https://run.app',
+]
+
 # ALLOWED_HOSTS must include '*' or your Cloud Run domain for the app to be reachable online
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [    'cloudrun-app-server-272907652960.us-central1.run.app',
+    'localhost',
+    '127.0.0.1',]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
