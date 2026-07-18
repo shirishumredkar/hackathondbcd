@@ -36,6 +36,26 @@ resource "google_cloud_run_v2_service" "app_service" {
       ports {
         container_port = 8080
       }
+
+       # Mount the secret volume as a physical file inside the container
+      volume_mounts {
+        name       = "env-volume"
+        mount_path = "/app/secrets"
+      }
+    }
+
+    # Reference the secret container asset
+    volumes {
+      name = "env-volume"
+      secret {
+        secret = "app-env-config"
+        items {
+          version = "latest"
+          path    = ".env" # Saves it as /app/secrets/.env
+        }
+      }
+    }
+
     }
 
     vpc_access {
