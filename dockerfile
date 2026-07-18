@@ -9,7 +9,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Step 4: Copy the application code into the container
-COPY app.py .
+COPY . .
 
 # Step 5: Inform Docker that the container listens on port 8080
 EXPOSE 8080
